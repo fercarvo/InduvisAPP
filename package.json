@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "test": "node ./bin/www",
-    "start": "PORT=3000 NODE_ENV=production node ./bin/www"
+    "start": "PORT=3001 NODE_ENV=production node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
