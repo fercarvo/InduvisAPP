@@ -23,13 +23,8 @@ router.post('/induvis/confirmacion/crear/', async function (req, res, next) {
         console.log(payload)
 
         var params = [
-            {
-                column: 'M_InOut_ID', 
-                val: payload.m_inout_id
-            },{
-                column: 'Description', 
-                val: payload.descripcion
-            }
+            { column: 'M_InOut_ID', val: payload.m_inout_id },
+            { column: 'Description', val: btoa(payload.descripcion) }
         ]
 
         var resultado = await requestWS( induvis.host, 'crear_confirmacion_ws', payload.ctx, params)
@@ -62,7 +57,7 @@ router.post('/induvis/pago/crear/', async function (req, res, next) {
             { column: 'C_DocType_ID', val: Number( req.body['C_DocType_ID'] ) },
             { column: 'C_Invoice_ID', val: Number( req.body['C_Invoice_ID'] ) },
             { column: 'DateTrx', val: moment(req.body['dateTrx'], "YYYY-MM-DD").format('YYYY-MM-DD') + ' 00:00:00' },
-            { column: 'Description', val: req.body.description }
+            { column: 'Description', val: btoa(req.body.description) }
         ]
 
         var context = {
@@ -155,13 +150,13 @@ router.post('/induvis/orden/crear/', async function (req, res, next) {
 
             { column: 'M_Warehouse_ID', val: Number(data['M_Warehouse_ID'])  },
             { column: 'C_DocTypeTarget_ID', val: Number(data['C_DocTypeTarget_ID'])  },
-            { column: 'C_BPartner_ID', val: Number(data['C_BPartner_ID'])  },
+            { column: 'C_BPartner_ID', val: Number(data['C_BPartner']['C_BPartner_ID'])  },
             { column: 'SalesRep_ID', val: Number(data['SalesRep_ID'])  },
             { column: 'C_PaymentTerm_ID', val: Number(data['C_PaymentTerm_ID'])  },
-            { column: 'description', val: btoa(data['description']) },
+            { column: 'Description', val: btoa(data['description']) },
             { column: 'M_PriceList_ID', val: Number(data['M_PriceList_ID'])  },
             { column: 'C_DocType_ID', val: Number(data['C_DocType_ID'])  },
-            { column: 'PaymentRule', val: Number(data['PaymentRule'])  },
+            { column: 'PaymentRule', val: data['PaymentRule']  },
 
             { column: 'line_priceActual', val: data['orderLines'].map(linea => linea['priceActual']).join('_')  },
             { column: 'line_M_Product_ID', val: data['orderLines'].map(linea => linea['M_Product_ID']).join('_')  },
