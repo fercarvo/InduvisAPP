@@ -44,6 +44,43 @@ router.post('/induvis/confirmacion/crear/', async function (req, res, next) {
  */
 router.post('/induvis/pago/crear/', async function (req, res, next) {
 
+    /*{
+        "C_BPartner":{
+            "C_BPartner_ID":1007374,
+            "value":"1715753529001",
+            "Name":"ÑACATA RUIZ HENRY PATRICIO"
+        },
+        "updatedBy":1006540,
+        "LoginInfo": {
+            "M_Warehouse_ID":1000020,
+            "AD_Role_ID":1000011,
+            "pass":"bea342516",
+            "AD_Org_ID":1000003,
+            "AD_Client_ID":1000004,
+            "lang":"es_CO",
+            "user":"rguerra"
+        },
+        "createdBy":1006540,
+        "AD_Org_ID":1000003,
+        "description":"<<USR: rguerra >> ; FAC: 003-001-000010835; RPG: 44839; OBS: CANCELADO 6/12/2028 RECIBO # 44839",
+        "Payments":[{
+            "PayAmt":20,
+            "A_Name":"ÑACATA RUIZ HENRY PATRICIO",
+            "RoutingNo":"",
+            "C_Currency_ID":100,
+            "C_BankAccount_ID":1000002,
+            "TenderType":"X"
+        }],
+        "C_DocType_ID":1000008,
+    
+        "C_Invoice_ID":1030525,
+        "SalesRep_ID": 1231231,
+        "CodigoRecibo": "44839",
+    
+        "dateTrx":"2018-12-06",
+        "AD_Client_ID":1000004
+    }*/
+
     try {
         var params = [
             { column: 'AD_Org_ID', val: req.body['AD_Org_ID'] },
@@ -57,7 +94,9 @@ router.post('/induvis/pago/crear/', async function (req, res, next) {
             { column: 'C_DocType_ID', val: Number( req.body['C_DocType_ID'] ) },
             { column: 'C_Invoice_ID', val: Number( req.body['C_Invoice_ID'] ) },
             { column: 'DateTrx', val: moment(req.body['dateTrx'], "YYYY-MM-DD").format('YYYY-MM-DD') + ' 00:00:00' },
-            { column: 'Description', val: btoa(req.body.description) }
+            { column: 'Description', val: btoa(req.body.description) },
+            { column: 'SalesRep_ID', val: Number(req.body['SalesRep_ID']) },
+            { column: 'CodigoRecibo', val: btoa(req.body['CodigoRecibo']) }
         ]
 
         var context = {
