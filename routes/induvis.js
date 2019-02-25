@@ -234,4 +234,82 @@ router.post('/induvis/orden/crear/', async function (req, res, next) {
     }
 })
 
+/**
+ * Ruta que actualiza el tercero
+ */
+router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
+
+    /*{
+        "C_BPartner":{
+            "C_BPartner_ID":1007374,
+            "value":"1715753529001",
+            "Name2": "Los pollos hermanos",
+            "SalesRep_ID": 1023562,
+        },
+        "C_BPartner_Location": {
+            "C_BPartner_Location_ID": 1234567,
+            "C_SalesRegion_ID": 9874563,
+            "Phone": "+593985663256",
+            "Phone2": "+1256910001",
+            "Address1": "Alborada 8",
+            "Address2": "Machala y nueve de octubre",
+            "Latitud": -2.1679741,
+            "Longitud": -79.9057572
+        },
+        "LoginInfo": {
+            "M_Warehouse_ID":1000020,
+            "AD_Role_ID":1000011,
+            "pass":"foobar",
+            "AD_Org_ID":1000003,
+            "AD_Client_ID":1000004,
+            "lang":"es_CO",
+            "user":"hola.mundo"
+        },
+        "AD_User":{
+            "AD_User_ID":1000002,
+            "EMail": "foo@bar.ec"
+        }
+    }*/
+
+     var data = req.body;
+
+    try {
+        var params = [
+            { column: 'C_BPartner_ID', val: Number(data['C_BPartner']['C_BPartner_ID'])  },
+            { column: 'Name2', val: data['C_BPartner']['Name2']  },
+            { column: 'SalesRep_ID', val: Number(data['C_BPartner']['SalesRep_ID'])  },
+
+            { column: 'C_BPartner_Location_ID', val: Number(data['C_BPartner_Location']['C_BPartner_Location_ID'])  },
+            { column: 'C_SalesRegion_ID', val: Number(data['C_BPartner_Location']['C_SalesRegion_ID'])  },
+            { column: 'Phone', val: data['C_BPartner_Location']['Phone']  },
+            { column: 'Phone2', val: data['C_BPartner_Location']['Phone2']  },
+            { column: 'Address1', val: data['C_BPartner_Location']['Address1']  },
+            { column: 'Address2', val: data['C_BPartner_Location']['Address2']  },
+            { column: 'Latitud', val: Number(data['C_BPartner_Location']['Latitud'])  },
+            { column: 'Longitud', val: Number(data['C_BPartner_Location']['Longitud'])  },
+
+            { column: 'AD_User_ID', val: Number(data['AD_User']['AD_User_ID'])  },
+            { column: 'EMail', val: data['AD_User']['EMail']  },
+        ]
+
+        var context = {
+            username: req.body['LoginInfo']['user'],
+            password: req.body['LoginInfo']['pass'],
+            ad_client_id: req.body['LoginInfo']['AD_Client_ID'],
+            ad_role_id: req.body['LoginInfo']['AD_Role_ID'],
+            ad_org_id: req.body['LoginInfo']['AD_Org_ID'],
+            m_warehouse_id: req.body['LoginInfo']['M_Warehouse_ID']
+        }
+
+        console.log(params)
+        
+        var resultado = await requestWS( induvis.host, 'actualizar_tercero_ws', context, params)
+        res.json({ exito: true, ...json, msg: resultado })
+
+    } catch (e) {
+        console.error(e)
+        res.json({exito: false, msg: `${e}`})
+    }
+})
+
 module.exports = router;
