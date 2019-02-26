@@ -244,7 +244,7 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             "C_BPartner_ID":1007374,
             "value":"1715753529001",
             "Name2": "Los pollos hermanos",
-            "SalesRep_ID": 1023562,
+            "SalesRep_ID": 1023562
         },
         "C_BPartner_Location": {
             "C_BPartner_Location_ID": 1234567,
@@ -276,15 +276,15 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
     try {
         var params = [
             { column: 'C_BPartner_ID', val: Number(data['C_BPartner']['C_BPartner_ID'])  },
-            { column: 'Name2', val: data['C_BPartner']['Name2']  },
+            { column: 'Name2', val: btoa( data['C_BPartner']['Name2'] )  },
             { column: 'SalesRep_ID', val: Number(data['C_BPartner']['SalesRep_ID'])  },
 
             { column: 'C_BPartner_Location_ID', val: Number(data['C_BPartner_Location']['C_BPartner_Location_ID'])  },
             { column: 'C_SalesRegion_ID', val: Number(data['C_BPartner_Location']['C_SalesRegion_ID'])  },
             { column: 'Phone', val: data['C_BPartner_Location']['Phone']  },
             { column: 'Phone2', val: data['C_BPartner_Location']['Phone2']  },
-            { column: 'Address1', val: data['C_BPartner_Location']['Address1']  },
-            { column: 'Address2', val: data['C_BPartner_Location']['Address2']  },
+            { column: 'Address1', val: btoa( data['C_BPartner_Location']['Address1'] )  },
+            { column: 'Address2', val: btoa( data['C_BPartner_Location']['Address2'] )  },
             { column: 'Latitud', val: Number(data['C_BPartner_Location']['Latitud'])  },
             { column: 'Longitud', val: Number(data['C_BPartner_Location']['Longitud'])  },
 
@@ -304,7 +304,7 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
         console.log(params)
         
         var resultado = await requestWS( induvis.host, 'actualizar_tercero_ws', context, params)
-        res.json({ exito: true, ...json, msg: resultado })
+        res.json({ exito: true, msg: resultado })
 
     } catch (e) {
         console.error(e)
