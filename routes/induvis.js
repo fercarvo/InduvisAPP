@@ -7,7 +7,7 @@ var { induvis } = require('../util/DB.js');
 
 //var { getServerData, sendPackage } = require('./tecnico.js')
 
-var btoa = txt => Buffer.from(txt, 'binary').toString('base64');
+var btoa = txt => Buffer.from((txt || '') , 'binary').toString('base64');
 
 router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
