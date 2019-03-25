@@ -253,6 +253,11 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             "Phone2": "+1256910001",
             "Address1": "Alborada 8",
             "Address2": "Machala y nueve de octubre",
+
+            "Address3": "foo bar loc",
+            "codigo_provincia": "18",
+            "codigo_ciudad": "1809",
+
             "Latitud": -2.1679741,
             "Longitud": -79.9057572
         },
@@ -267,7 +272,8 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
         },
         "AD_User":{
             "AD_User_ID":1000002,
-            "EMail": "foo@bar.ec"
+            "EMail": "foo@bar.ec",
+            "Birthday": "2001-12-06"
         }
     }*/
 
@@ -285,11 +291,15 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             { column: 'Phone2', val: data['C_BPartner_Location']['Phone2']  },
             { column: 'Address1', val: btoa( data['C_BPartner_Location']['Address1'] )  },
             { column: 'Address2', val: btoa( data['C_BPartner_Location']['Address2'] )  },
+            { column: 'Address3', val: btoa( data['C_BPartner_Location']['Address3'] )  },
+            { column: 'codigo_provincia', val: data['C_BPartner_Location']['codigo_provincia']  },
+            { column: 'codigo_ciudad', val: data['C_BPartner_Location']['codigo_ciudad']  },
             { column: 'Latitud', val: Number(data['C_BPartner_Location']['Latitud'])  },
             { column: 'Longitud', val: Number(data['C_BPartner_Location']['Longitud'])  },
 
             { column: 'AD_User_ID', val: Number(data['AD_User']['AD_User_ID'])  },
             { column: 'EMail', val: data['AD_User']['EMail']  },
+            { column: 'Birthday', val: moment(data['AD_User']['Birthday'], "YYYY-MM-DD").format('YYYY-MM-DD') + ' 00:00:00'  }
         ]
 
         var context = {
