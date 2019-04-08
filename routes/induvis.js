@@ -11,7 +11,7 @@ var btoa = txt => Buffer.from((txt || '') , 'binary').toString('base64');
 
 router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Headers", (req.headers['access-control-request-headers']) ? req.headers['access-control-request-headers'] : "x-requested-with");
     res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
     next();
 })
