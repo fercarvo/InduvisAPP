@@ -12,6 +12,7 @@ var btoa = txt => Buffer.from((txt || '') , 'binary').toString('base64');
 router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
+    res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
     next();
 })
 
@@ -274,6 +275,10 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             "AD_User_ID":1000002,
             "EMail": "foo@bar.ec",
             "Birthday": "2001-12-06"
+        },
+        "tipo_negocio": {
+            "Value": 0007,
+            "Description": "COMERCIO"
         }
     }*/
 
