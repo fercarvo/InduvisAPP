@@ -90,6 +90,8 @@ router.post('/induvis/pago/crear/', async function (req, res, next) {
         "dateTrx":"2018-12-06",
         "AD_Client_ID":1000004
     }*/
+    console.log(req.body)
+
 
     try {
         var params = [
@@ -191,6 +193,8 @@ router.post('/induvis/orden/crear/', async function (req, res, next) {
      }*/
 
      var data = req.body;
+     console.log(data)
+
 
     try {
         var params = [
@@ -298,6 +302,7 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
     }*/
 
      var data = req.body;
+     console.log(data)
 
     try {
         var params = [
