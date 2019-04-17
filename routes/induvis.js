@@ -9,6 +9,18 @@ var { induvis } = require('../util/DB.js');
 
 var btoa = txt => Buffer.from((txt || '') , 'binary').toString('base64');
 
+/**
+ * Convierte un valor a numero, caso contrario retorna ""
+ * @param {*} value numero
+ */
+function toNumber (value) {
+    if (value === null || value === undefined || isNaN(value)) {
+        return ''
+    } else {
+        return Number(value)
+    }
+}
+
 router.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", (req.headers['access-control-request-headers']) ? req.headers['access-control-request-headers'] : "x-requested-with");
@@ -20,9 +32,6 @@ router.post('/induvis/confirmacion/crear/', async function (req, res, next) {
 
     try {
         var payload = req.body    
-
-        console.log(payload)
-
         var params = [
             { column: 'M_InOut_ID', val: payload.m_inout_id },
             { column: 'Description', val: btoa(payload.descripcion) }
@@ -85,18 +94,18 @@ router.post('/induvis/pago/crear/', async function (req, res, next) {
     try {
         var params = [
             { column: 'AD_Org_ID', val: req.body['AD_Org_ID'] },
-            { column: 'C_BPartner_ID', val: Number( req.body['C_BPartner']['C_BPartner_ID'] ) },
-            { column: 'PayAmt', val: Number( req.body['Payments'][0]['PayAmt'] ) },
+            { column: 'C_BPartner_ID', val: toNumber( req.body['C_BPartner']['C_BPartner_ID'] ) },
+            { column: 'PayAmt', val: toNumber( req.body['Payments'][0]['PayAmt'] ) },
             { column: 'A_Name', val: req.body['Payments'][0]['A_Name'] },
             { column: 'RoutingNo', val: req.body['Payments'][0]['RoutingNo'] },
-            { column: 'C_BankAccount_ID', val: Number( req.body['Payments'][0]['C_BankAccount_ID'] ) },
-            { column: 'C_Currency_ID', val: Number( req.body['Payments'][0]['C_Currency_ID'] ) },
+            { column: 'C_BankAccount_ID', val: toNumber( req.body['Payments'][0]['C_BankAccount_ID'] ) },
+            { column: 'C_Currency_ID', val: toNumber( req.body['Payments'][0]['C_Currency_ID'] ) },
             { column: 'TenderType', val: req.body['Payments'][0]['TenderType'] },
-            { column: 'C_DocType_ID', val: Number( req.body['C_DocType_ID'] ) },
-            { column: 'C_Invoice_ID', val: Number( req.body['C_Invoice_ID'] ) },
+            { column: 'C_DocType_ID', val: toNumber( req.body['C_DocType_ID'] ) },
+            { column: 'C_Invoice_ID', val: toNumber( req.body['C_Invoice_ID'] ) },
             { column: 'DateTrx', val: moment(req.body['dateTrx'], "YYYY-MM-DD").format('YYYY-MM-DD') + ' 00:00:00' },
             { column: 'Description', val: btoa(req.body.description) },
-            { column: 'SalesRep_ID', val: Number(req.body['SalesRep_ID']) },
+            { column: 'SalesRep_ID', val: toNumber(req.body['SalesRep_ID']) },
             { column: 'CodigoRecibo', val: btoa(req.body['CodigoRecibo']) }
         ]
 
@@ -115,14 +124,14 @@ router.post('/induvis/pago/crear/', async function (req, res, next) {
         resultado = resultado.split('____')
 
         var json = { }
-        json['C_Order_ID'] = Number( resultado[0] )
-        json['C_Invoice_ID'] = Number( resultado[1] )
+        json['C_Order_ID'] = toNumber( resultado[0] )
+        json['C_Invoice_ID'] = toNumber( resultado[1] )
         json['payments'] = [{}]
-        json['payments'][0]['C_Payment_ID'] = Number( resultado[2] )
+        json['payments'][0]['C_Payment_ID'] = toNumber( resultado[2] )
         json['payments'][0]['DocumentNo'] = resultado[3]
-        json['payments'][0]['PayAmt'] = Number( resultado[4] )
+        json['payments'][0]['PayAmt'] = toNumber( resultado[4] )
         json['payments'][0]['TenderType'] = resultado[5]
-        json['paymentRemain'] = Number( resultado[6] )
+        json['paymentRemain'] = toNumber( resultado[6] )
 
         console.log('respuesta WS', json)
         res.json({ exito: true, ...json })
@@ -185,17 +194,17 @@ router.post('/induvis/orden/crear/', async function (req, res, next) {
 
     try {
         var params = [
-            { column: 'AD_Client_ID', val: Number(data['AD_Client_ID'])  },
-            { column: 'AD_Org_ID', val: Number(data['AD_Org_ID'])  },
+            { column: 'AD_Client_ID', val: toNumber(data['AD_Client_ID'])  },
+            { column: 'AD_Org_ID', val: toNumber(data['AD_Org_ID'])  },
 
-            { column: 'M_Warehouse_ID', val: Number(data['M_Warehouse_ID'])  },
-            { column: 'C_DocTypeTarget_ID', val: Number(data['C_DocTypeTarget_ID'])  },
-            { column: 'C_BPartner_ID', val: Number(data['C_BPartner']['C_BPartner_ID'])  },
-            { column: 'SalesRep_ID', val: Number(data['SalesRep_ID'])  },
-            { column: 'C_PaymentTerm_ID', val: Number(data['C_PaymentTerm_ID'])  },
+            { column: 'M_Warehouse_ID', val: toNumber(data['M_Warehouse_ID'])  },
+            { column: 'C_DocTypeTarget_ID', val: toNumber(data['C_DocTypeTarget_ID'])  },
+            { column: 'C_BPartner_ID', val: toNumber(data['C_BPartner']['C_BPartner_ID'])  },
+            { column: 'SalesRep_ID', val: toNumber(data['SalesRep_ID'])  },
+            { column: 'C_PaymentTerm_ID', val: toNumber(data['C_PaymentTerm_ID'])  },
             { column: 'Description', val: btoa(data['description']) },
-            { column: 'M_PriceList_ID', val: Number(data['M_PriceList_ID'])  },
-            { column: 'C_DocType_ID', val: Number(data['C_DocType_ID'])  },
+            { column: 'M_PriceList_ID', val: toNumber(data['M_PriceList_ID'])  },
+            { column: 'C_DocType_ID', val: toNumber(data['C_DocType_ID'])  },
             { column: 'PaymentRule', val: data['PaymentRule']  },
 
             { column: 'line_priceActual', val: data['orderLines'].map(linea => linea['priceActual']).join('_')  },
@@ -292,12 +301,12 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
 
     try {
         var params = [
-            { column: 'C_BPartner_ID', val: Number(data['C_BPartner']['C_BPartner_ID'])  },
+            { column: 'C_BPartner_ID', val: toNumber(data['C_BPartner']['C_BPartner_ID'])  },
             { column: 'Name2', val: btoa( data['C_BPartner']['Name2'] )  },
-            { column: 'SalesRep_ID', val: Number(data['C_BPartner']['SalesRep_ID'])  },
+            { column: 'SalesRep_ID', val: toNumber(data['C_BPartner']['SalesRep_ID'])  },
 
-            { column: 'C_BPartner_Location_ID', val: Number(data['C_BPartner_Location']['C_BPartner_Location_ID'])  },
-            { column: 'C_SalesRegion_ID', val: Number(data['C_BPartner_Location']['C_SalesRegion_ID'])  },
+            { column: 'C_BPartner_Location_ID', val: toNumber(data['C_BPartner_Location']['C_BPartner_Location_ID'])  },
+            { column: 'C_SalesRegion_ID', val: toNumber(data['C_BPartner_Location']['C_SalesRegion_ID'])  },
             { column: 'Phone', val: data['C_BPartner_Location']['Phone']  },
             { column: 'Phone2', val: data['C_BPartner_Location']['Phone2']  },
             { column: 'Address1', val: btoa( data['C_BPartner_Location']['Address1'] )  },
@@ -305,10 +314,10 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             { column: 'Address3', val: btoa( data['C_BPartner_Location']['Address3'] )  },
             { column: 'codigo_provincia', val: data['C_BPartner_Location']['codigo_provincia']  },
             { column: 'codigo_ciudad', val: data['C_BPartner_Location']['codigo_ciudad']  },
-            { column: 'Latitud', val: Number(data['C_BPartner_Location']['Latitud'])  },
-            { column: 'Longitud', val: Number(data['C_BPartner_Location']['Longitud'])  },
+            { column: 'Latitud', val: toNumber(data['C_BPartner_Location']['Latitud'])  },
+            { column: 'Longitud', val: toNumber(data['C_BPartner_Location']['Longitud'])  },
 
-            { column: 'AD_User_ID', val: Number(data['AD_User']['AD_User_ID'])  },
+            { column: 'AD_User_ID', val: toNumber(data['AD_User']['AD_User_ID'])  },
             { column: 'EMail', val: data['AD_User']['EMail']  },
             { column: 'Birthday', val: moment(data['AD_User']['Birthday'], "YYYY-MM-DD").format('YYYY-MM-DD') + ' 00:00:00'  },
 
