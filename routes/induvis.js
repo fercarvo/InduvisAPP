@@ -14,11 +14,12 @@ var btoa = txt => Buffer.from((txt || '') , 'binary').toString('base64');
  * @param {*} value numero
  */
 function toNumber (value) {
-    if (value === null || value === undefined || isNaN(value)) {
+    return Number(value)
+    /*if (value === null || value === undefined || isNaN(value)) {
         return ''
     } else {
         return Number(value)
-    }
+    }*/
 }
 
 router.use(function (req, res, next) {
