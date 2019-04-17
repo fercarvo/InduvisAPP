@@ -247,6 +247,7 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             "Name2": "Los pollos hermanos",
             "SalesRep_ID": 1023562
         },
+        "activo": false,
         "C_BPartner_Location": {
             "C_BPartner_Location_ID": 1234567,
             "C_SalesRegion_ID": 9874563,
@@ -258,6 +259,11 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             "Address3": "foo bar loc",
             "codigo_provincia": "18",
             "codigo_ciudad": "1809",
+
+            "frecuencia_visita": 12,
+            "hora_apertura": "07:50",
+            "hora_cierre": "17:55",
+            "fecha_apertura": "2006-12-01",
 
             "Latitud": -2.1679741,
             "Longitud": -79.9057572
@@ -277,7 +283,7 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             "Birthday": "2001-12-06"
         },
         "tipo_negocio": {
-            "Value": 0007,
+            "Value": "0007",
             "Description": "COMERCIO"
         }
     }*/
@@ -304,7 +310,10 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
 
             { column: 'AD_User_ID', val: Number(data['AD_User']['AD_User_ID'])  },
             { column: 'EMail', val: data['AD_User']['EMail']  },
-            { column: 'Birthday', val: moment(data['AD_User']['Birthday'], "YYYY-MM-DD").format('YYYY-MM-DD') + ' 00:00:00'  }
+            { column: 'Birthday', val: moment(data['AD_User']['Birthday'], "YYYY-MM-DD").format('YYYY-MM-DD') + ' 00:00:00'  },
+
+            { column: "tipo_negocioCodigo", val: data['tipo_negocio']['Value'] },
+            { column: "tipo_negocioDescripcion", val: data['tipo_negocio']['Description'] }
         ]
 
         var context = {
