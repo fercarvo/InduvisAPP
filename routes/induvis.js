@@ -312,8 +312,8 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             { column: 'EMail', val: data['AD_User']['EMail']  },
             { column: 'Birthday', val: moment(data['AD_User']['Birthday'], "YYYY-MM-DD").format('YYYY-MM-DD') + ' 00:00:00'  },
 
-            { column: "tipo_negocioCodigo", val: data['tipo_negocio']['Value'] },
-            { column: "tipo_negocioDescripcion", val: data['tipo_negocio']['Description'] }
+            { column: "tipo_negocioCodigo", val: btoa( data['tipo_negocio']['Value'] ) },
+            { column: "tipo_negocioDescripcion", val: btoa( data['tipo_negocio']['Description'] ) }
         ]
 
         var context = {
