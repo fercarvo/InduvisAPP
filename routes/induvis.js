@@ -271,10 +271,10 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             "codigo_provincia": "18",
             "codigo_ciudad": "1809",
 
-            "frecuencia_visita": 12,
-            "hora_apertura": "07:50",
-            "hora_cierre": "17:55",
-            "fecha_apertura": "2006-12-01",
+            "Frecuencia_visita": 12,
+            "Hora_apertura": "07:50",
+            "Hora_cierre": "17:55",
+            "Fecha_apertura": "2006-12-01",
 
             "Latitud": -2.1679741,
             "Longitud": -79.9057572
@@ -319,10 +319,11 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             { column: 'codigo_ciudad', val: data['C_BPartner_Location']['codigo_ciudad']  },
             { column: 'Latitud', val: Number(data['C_BPartner_Location']['Latitud'])  },
             { column: 'Longitud', val: Number(data['C_BPartner_Location']['Longitud'])  },
-            { column: 'frecuencia_visita', val: toNumber(data['C_BPartner_Location']['frecuencia_visita'])  },
+            
+            { column: 'frecuencia_visita', val: toNumber(data['C_BPartner_Location']['Frecuencia_visita'])  },
             
             { column: 'hora_apertura', val: (()=>{
-                var hora = data['C_BPartner_Location']['hora_apertura']
+                var hora = data['C_BPartner_Location']['Hora_apertura']
                 var hora_apertura = moment(hora, 'hh:mm')
 
                 if (!hora_apertura.isValid())
@@ -332,7 +333,7 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             })() },
 
             { column: 'hora_cierre', val: (()=>{
-                var hora = data['C_BPartner_Location']['hora_cierre']
+                var hora = data['C_BPartner_Location']['Hora_cierre']
                 var hora_cierre = moment(hora, 'hh:mm')
 
                 if (!hora_cierre.isValid())
