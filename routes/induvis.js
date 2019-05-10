@@ -343,7 +343,7 @@ router.post('/induvis/tercero/actualizar/', async function (req, res, next) {
             })() },
 
             { column: 'fecha_apertura', val: (()=>{
-                var fecha = data['C_BPartner_Location']['fecha_apertura']
+                var fecha = data['C_BPartner_Location']['Fecha_apertura']
                 var fecha_apertura = moment(fecha, 'YYYY-MM-DD')
 
                 if (!fecha_apertura.isValid())
