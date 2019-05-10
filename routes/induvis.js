@@ -147,7 +147,8 @@ router.post('/induvis/pago/crear/', async function (req, res, next) {
  */
 router.post('/induvis/orden/crear/', async function (req, res, next) {
 
-    /*var data = {  
+    /*var data = {
+        "AppID": "100256325",  
         "M_Warehouse_ID":1000020,
         "C_DocTypeTarget_ID":1000032,
         "C_BPartner":{  
@@ -196,6 +197,7 @@ router.post('/induvis/orden/crear/', async function (req, res, next) {
 
     try {
         var params = [
+            { column: "AppID", val: data["AppID"] },
             { column: 'AD_Client_ID', val: Number(data['AD_Client_ID'])  },
             { column: 'AD_Org_ID', val: Number(data['AD_Org_ID'])  },
 
