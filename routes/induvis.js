@@ -98,7 +98,7 @@ router.post('/induvis/pago/crear/', async function (req, res, next) {
             { column: 'AD_Org_ID', val: req.body['AD_Org_ID'] },
             { column: 'C_BPartner_ID', val: Number( req.body['C_BPartner']['C_BPartner_ID'] ) },
             { column: 'PayAmt', val: Number( req.body['Payments'][0]['PayAmt'] ) },
-            { column: 'A_Name', val: req.body['Payments'][0]['A_Name'] },
+            { column: 'A_Name', val: btoa(req.body['Payments'][0]['A_Name']) },
             { column: 'RoutingNo', val: req.body['Payments'][0]['RoutingNo'] },
             { column: 'C_BankAccount_ID', val: Number( req.body['Payments'][0]['C_BankAccount_ID'] ) },
             { column: 'C_Currency_ID', val: Number( req.body['Payments'][0]['C_Currency_ID'] ) },
